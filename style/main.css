@@ -18,10 +18,6 @@ body {
 ::selection {
     background: var(--highlight);
 }
-/* 
-::-moz-selection {
-    background: #ffb7b7;
-} */
 
 .navbar {
     position: fixed;

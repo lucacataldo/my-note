@@ -57,6 +57,7 @@
 
 				if (err) {
 					console.log("Filer error, using default.");
+					alert("Looks like something went wrong, try refreshing the page. If the problem persists, your browser may be blocking saves!")
 				} else if (data && data != "<br>") {
 					loadedString = data
 				}
