@@ -13,6 +13,9 @@
 <body>
 	<div class="navbar">
 		<span class="logo">my notes.</span>
+		<div class="tools">
+			<a id="saveButton" href="#">save</a>
+		</div>
 	</div>
 
 	<a href="https://github.com/lucacataldo/my-note" id="gitLink">
@@ -21,7 +24,9 @@
 
 
 
-
+	<div id="savedBlip">
+		saved!
+	</div>
 	<div class="main-container">
 		<div id="notepad" contenteditable>
 
@@ -44,9 +49,11 @@
 		const fs = new Filer.FileSystem();
 		$(() => {
 			fs.readFile('/note.txt', 'utf8', (err, data) => {
+				// initial message
 				var loadedString = "Welcome to my-note! Start typing here, and we'll automatically save it for you.";
-				console.log(`loaded saved string: "${data}"`);
 
+				// init timer for typing event
+				var timer = null;
 
 				if (err) {
 					console.log("Filer error, using default.");
@@ -55,40 +62,60 @@
 				}
 
 
+				// load string into the DOM
 
 				$("#notepad").html(loadedString);
 
 
 
-				setInterval(() => {
-					// forcing string
-					let written = "" + $("#notepad").html();
+				$("#notepad").keyup(() => {
 
 
-					if (written === data) {
-						console.log("Autosave skipped, same contents.");
-					} else {
-						fs.writeFile('/note.txt', written, (err) => {
-							if (err) {
-								alert("error saving.");
-							} else {
-								console.log("saved");
+					$(".navbar").css("border-color", "var(--highlight)")
 
-							}
-						})
-					}
+					// clears timer on every keypress immediately
+					clearTimeout(timer);
 
+					//creates new timeout on var timer that will be cleared if keyup event is fired within timeout time
+					timer = setTimeout(() => {
+						// autosaved when user isn't typing
+						save();
+					}, 500);
 
-				}, 2000);
-
-
-
+				})
 
 
 
 
 			})
+
+			$("#saveButton").click(() => {
+				save();
+			})
 		})
+
+
+
+
+		function save() {
+			let contentString = "" + $("#notepad").html();
+			fs.writeFile('/note.txt', contentString, (err) => {
+				if (err) {
+					showError();
+				} else {
+					showSuccess();
+				}
+			})
+		}
+
+
+		function showSuccess() {
+			$(".navbar").css("border-color", "var(--success)")
+		}
+
+		function showError() {
+			$(".navbar").css("border-color", "var(--error)")
+		}
 
 	</script>
 </body>
