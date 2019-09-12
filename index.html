@@ -1,12 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>My-Note | An offline note taking app</title>
+	<link href="https://fonts.googleapis.com/css?family=Crimson+Pro:300,500&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style/main.css">
 </head>
+
 <body>
-    
+	<div class="navbar">
+		<span class="logo">my notes.</span>
+	</div>
+
+	<a href="https://github.com/lucacataldo/my-note" id="gitLink">
+		<img src="img/git.svg" alt="github logo" width="25px">
+	</a>
+
+
+
+
+	<div class="main-container">
+		<div id="notepad" contenteditable>
+
+		</div>
+	</div>
+
+
+
+
+
+
+	<!-- Scripts -->
+
+
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/filer/dist/filer.min.js"></script>
+
+	<script>
+		const fs = new Filer.FileSystem();
+		$(() => {
+			fs.readFile('/note.txt', 'utf8', (err, data) => {
+				var loadedString = "Welcome to my-note! Start typing here, and we'll automatically save it for you.";
+				console.log(`loaded saved string: "${data}"`);
+
+
+				if (err) {
+					console.log("Filer error, using default.");
+				} else if (data && data != "<br>") {
+					loadedString = data
+				}
+
+
+
+				$("#notepad").html(loadedString);
+
+
+
+				setInterval(() => {
+					// forcing string
+					let written = "" + $("#notepad").html();
+
+
+					if (written === data) {
+						console.log("Autosave skipped, same contents.");
+					} else {
+						fs.writeFile('/note.txt', written, (err) => {
+							if (err) {
+								alert("error saving.");
+							} else {
+								console.log("saved");
+
+							}
+						})
+					}
+
+
+				}, 2000);
+
+
+
+
+
+
+
+			})
+		})
+
+	</script>
 </body>
+
 </html>
