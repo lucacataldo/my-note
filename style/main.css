@@ -57,7 +57,7 @@ body {
     text-decoration: none;
     font-size: 18px;
     padding: 10px;
-    margin-left: 20px;
+    margin-right: 20px;
     transition: all 0.3s ease;
 }
 
@@ -97,34 +97,6 @@ body {
     outline: dotted 2px #dddddd;
 }
 
-#savedBlip {
-    position: fixed;
-    font-size: 20px;
-    background: #78e08f;
-    padding: 20px;
-    top: -65px;
-    right: 0px;
-    z-index: 20;
-}
-
-.savedAni {
-    animation: saved 1.2s ease forwards;
-}
-
-@keyframes saved {
-    0% {
-        transform: translateY(0px);
-    }
-    20% {
-        transform: translateY(65px);
-    }
-    90% {
-        transform: translateY(65px);
-    }
-    100% {
-        transform: translateY(0px);
-    }
-}
 
 @media only screen and (max-width: 600px) {
     .main-container {
