@@ -15,6 +15,7 @@
 		<span class="logo">my notes.</span>
 		<div class="tools">
 			<a id="saveButton" href="#">save</a>
+			<a id="clearButton" href="#">clear</a>
 		</div>
 	</div>
 
@@ -94,6 +95,9 @@
 			$("#saveButton").click(() => {
 				save();
 			})
+			$("#clearButton").click(()=>{
+				clearNote();
+			})
 		})
 
 
@@ -121,6 +125,12 @@
 				alert("Looks like something might be things from saving. This may be due to your browser blocking local storage for privacy reasons.")
 			}
 			$(".navbar").css("border-color", "var(--error)")
+		}
+		//clear function
+		function clearNote(){
+			let loadedString = "Welcome to my-note! Start typing here, and we'll automatically save it for you.";
+			$("#notepad").html(loadedString);
+			save(); 
 		}
 
 	</script>
